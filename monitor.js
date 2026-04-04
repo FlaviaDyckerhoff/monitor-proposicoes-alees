@@ -1,5 +1,10 @@
 const fs = require('fs');
+const https = require('https');
 const nodemailer = require('nodemailer');
+
+// Ignorar erros de SSL (necessário para al.es.gov.br com certificado auto-assinado)
+const { setGlobalDispatcher, Agent } = require('undici');
+setGlobalDispatcher(new Agent({ connect: { rejectUnauthorized: false } }));
 
 const EMAIL_DESTINO = process.env.EMAIL_DESTINO;
 const EMAIL_REMETENTE = process.env.EMAIL_REMETENTE;
