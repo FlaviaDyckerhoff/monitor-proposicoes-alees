@@ -1,6 +1,3 @@
-// Desabilitar verificação SSL antes de qualquer import (al.es.gov.br usa certificado sem cadeia)
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 
