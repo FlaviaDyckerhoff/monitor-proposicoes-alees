@@ -1,10 +1,8 @@
-const fs = require('fs');
-const https = require('https');
-const nodemailer = require('nodemailer');
+// Desabilitar verificação SSL antes de qualquer import (al.es.gov.br usa certificado sem cadeia)
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-// Ignorar erros de SSL (necessário para al.es.gov.br com certificado auto-assinado)
-const { setGlobalDispatcher, Agent } = require('undici');
-setGlobalDispatcher(new Agent({ connect: { rejectUnauthorized: false } }));
+const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 const EMAIL_DESTINO = process.env.EMAIL_DESTINO;
 const EMAIL_REMETENTE = process.env.EMAIL_REMETENTE;
