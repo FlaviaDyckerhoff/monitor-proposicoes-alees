@@ -106,6 +106,8 @@ function parseProposicoes(html) {
     // Título/tipo: <a ... class="kt-widget5__title">Indicação n° 950/2026</a>
     const tituloMatch = bloco.match(/kt-widget5__title[^>]*>\s*([^<]+?)\s*<\/a>/);
     const titulo = tituloMatch ? tituloMatch[1].trim() : '-';
+    const hrefMatch = bloco.match(/<a[^>]+href="([^"]+)"[^>]*class="kt-widget5__title"/);
+    const url = hrefMatch ? new URL(hrefMatch[1], URL_BASE).href : URL_BASE;
 
     // Tipo e número do título (ex: "Indicação n° 950/2026")
     const tipoNumMatch = titulo.match(/^(.+?)\s+n[°º]\s*(\d+)\/\d+/);
@@ -133,7 +135,7 @@ function parseProposicoes(html) {
     const processoMatch = bloco.match(/Processo N°:<\/span>\s*<a[^>]*>([^<]+)<\/a>/);
     const processo = processoMatch ? processoMatch[1].trim() : '-';
 
-    proposicoes.push({ id, tipo, numero, ementa, data, autor, processo });
+    proposicoes.push({ id, tipo, numero, ementa, data, autor, processo, url });
   }
 
   return proposicoes;
@@ -374,7 +376,7 @@ async function enviarEmail(novas) {
     const rows = porTipo[tipo].map(p =>
       `<tr>
         <td style="padding:8px;border-bottom:1px solid #eee;font-size:12px">${p.tipo || '-'}</td>
-        <td style="padding:8px;border-bottom:1px solid #eee"><strong>${p.numero || '-'}/${ANO}</strong></td>
+        <td style="padding:8px;border-bottom:1px solid #eee"><strong><a href="${p.url || URL_BASE}" style="color:#003366;text-decoration:none">${p.numero || '-'}/${ANO}</a></strong></td>
         <td style="padding:8px;border-bottom:1px solid #eee;font-size:12px">${p.autor || '-'}</td>
         <td style="padding:8px;border-bottom:1px solid #eee;font-size:12px;white-space:nowrap">${p.data ? p.data.substring(0, 16) : '-'}</td>
         <td style="padding:8px;border-bottom:1px solid #eee;font-size:12px">${p.ementa || '-'}</td>
