@@ -388,7 +388,7 @@ async function enviarEmail(novas) {
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:900px;margin:0 auto">
       <h2 style="color:#003366;border-bottom:2px solid #003366;padding-bottom:8px">
-        🏛️ ALES-ES — ${novas.length} nova(s) proposição(ões)
+        🏛️ Assembleia Legislativa do Espírito Santo — ${novas.length} nova(s) proposição(ões)
       </h2>
       <p style="color:#666">Monitoramento automático — ${new Date().toLocaleString('pt-BR')}</p>
       <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -404,15 +404,15 @@ async function enviarEmail(novas) {
         <tbody>${linhas}</tbody>
       </table>
       <p style="margin-top:20px;font-size:12px;color:#999">
-        Acesse: <a href="https://www3.al.es.gov.br/spl/consulta-producao.aspx?ano=${ANO}&ano_proposicao=${ANO}">Portal ALES</a>
+        Acesse: <a href="https://www3.al.es.gov.br/spl/consulta-producao.aspx?ano=${ANO}&ano_proposicao=${ANO}">Portal da Assembleia Legislativa do Espírito Santo</a>
       </p>
     </div>
   `;
 
   await transporter.sendMail({
-    from: `"Monitor ALES-ES" <${EMAIL_REMETENTE}>`,
+    from: `"Monitor Espírito Santo" <${EMAIL_REMETENTE}>`,
     to: EMAIL_DESTINO,
-    subject: `🏛️ ALES-ES: ${novas.length} nova(s) proposição(ões) — ${new Date().toLocaleDateString('pt-BR')}`,
+    subject: `🏛️ Espírito Santo: ${novas.length} nova(s) proposição(ões) — ${new Date().toLocaleDateString('pt-BR')}`,
     html,
   });
 
