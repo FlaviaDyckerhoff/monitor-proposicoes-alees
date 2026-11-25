@@ -155,12 +155,12 @@ function promoverInteresseClienteProposicao(item, clientesAtuais = [], context =
   const city = normalizeText((item && (item.municipio || item.cidade)) || context.municipio || '');
   const fiscalEs = /transacao tributaria|transacao por adesao|\brefis\b|programa de recuperacao fiscal|programa de regularizacao fiscal|\brot[- ]?st\b|regime optativo de tributacao|beneficios? fiscais?|incentivos? fiscais?|creditos? presumidos?|parcelamento (?:de )?(?:debitos|divida ativa)|regularizacao de debitos tributarios/.test(normalizeText(itemSearchText(item || {})));
   if (!city && (place === 'ES' || (!place && house === 'ALEES')) && fiscalEs && !matches.some(m => m.cliente_id === 'boticario')) {
-    matches.push({cliente: 'Boticário', cliente_id: 'boticario', camada: 'especial', territorio_status: 'foco', termos: ['fiscal ES'], confidence: 'media', match_type: 'fiscal-es', motivo: 'Possível interesse fiscal ES; conferir alcance/elegibilidade, sem associação automática'});
+    matches.push({cliente: 'Boticário', cliente_id: 'boticario', camada: 'especial', territorio_status: 'foco', termos: ['fiscal ES'], confidence: 'media', match_type: 'theme', motivo: 'Possível interesse fiscal ES; conferir alcance/elegibilidade, sem associação automática'});
   }
   if (item && typeof item === 'object') {
     item.clientInterestMatches = matches;
   }
-  return appendUnique(atuais, matches.filter(match => match.match_type === 'literal' || match.match_type === 'fiscal-es').map(match => match.cliente));
+  return appendUnique(atuais, matches.filter(match => match.match_type === 'literal').map(match => match.cliente));
 }
 
 module.exports = {
